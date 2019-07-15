@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  build-job:
     docker:
       # specify the version you desire here
       - image: circleci/node:12
@@ -31,3 +31,22 @@ jobs:
 
       # run tests!
       - run: yarn test
+  upload-job:
+    docker:
+      - image: circleci/node:12
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: step upload application
+          command: |
+            echo replace here
+
+workflows:
+  version: 2
+  build-flow:
+    jobs:
+      - build-job
+      - upload-job:
+          requires:
+            - build-job
